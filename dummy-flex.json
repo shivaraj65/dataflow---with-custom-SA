@@ -1,0 +1,10 @@
+{
+  "image": "asia-south1-docker.pkg.dev/shared-resource-496706/dataflow-images/dummy-flex:latest",
+  "sdkInfo": {
+    "language": "PYTHON"
+  },
+  "metadata": {
+    "name": "dummy-flex-template",
+    "description": "Dummy Dataflow Flex Template"
+  }
+}
