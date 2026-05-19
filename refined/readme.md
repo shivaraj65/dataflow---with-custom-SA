@@ -302,6 +302,11 @@ gcloud dataflow flex-template run "dummy-flex-job-001" \
   --project=sample-project
 ```
 
+
+
+
+
+
 ---
 
 # Runtime Flow
@@ -317,40 +322,6 @@ At runtime:
 
 ---
 
-# Source and Destination Configuration
-
-The source and destination systems can be configured based on application requirements.
-
-Examples include:
-
-| Type | Example |
-|---|---|
-| Source | Cloud Storage |
-| Source | BigQuery |
-| Source | Pub/Sub |
-| Destination | Cloud Storage |
-| Destination | BigQuery |
-| Destination | Databases |
-
-The same runtime service account model can be extended by granting the required IAM permissions for the respective source and destination systems.
-
----
-
-# Recommended Bucket Separation
-
-Recommended bucket layout:
-
-| Bucket Purpose | Example |
-|---|---|
-| Templates | `sample-project-dataflow-templates` |
-| Temp | `sample-project-dataflow-temp` |
-| Staging | `sample-project-dataflow-staging` |
-| Output | `gcs-project-output` |
-
-This improves operational isolation and debugging.
-
----
-
 # Common Failure Scenarios
 
 | Issue | Cause |
@@ -360,59 +331,3 @@ This improves operational isolation and debugging.
 | `storage.buckets.get` denied | Missing bucket metadata read permission |
 | Worker pool startup failure | Quota/subnet/stockout issues |
 | Flex Template launch failure | Incorrect launcher configuration |
-
----
-
-# Verification
-
-## Verify Worker Service Account
-
-Go to:
-
-```text
-Compute Engine -> VM Instances
-```
-
-Open a Dataflow worker VM and verify:
-
-```text
-Service Account:
-dataflow-worker-sa@sample-project.iam.gserviceaccount.com
-```
-
----
-
-# Verify Output Files
-
-List generated files:
-
-```bash
-gsutil ls gs://gcs-project-output/output/
-```
-
-Read generated files:
-
-```bash
-gsutil cat gs://gcs-project-output/output/*.txt
-```
-
----
-
-# Summary
-
-This setup provides:
-
-- Cross-project Dataflow execution
-- Dedicated runtime identity
-- Artifact Registry integration
-- Flexible source/destination configuration
-- Runtime isolation using a dedicated worker service account
-- CI/CD-driven Flex Template image management
-
-The same architecture can be extended further for:
-
-- orchestration platforms
-- production CI/CD
-- custom networking
-- VPC isolation
-- enterprise IAM governance
