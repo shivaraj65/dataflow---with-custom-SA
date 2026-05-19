@@ -139,11 +139,10 @@ The following permissiosn are required for the SA:
 
 ### shared-resources - [ artifacts registry project ]
 
-- Artifact Registry Reader - check this...
+- Artifact Registry Reader
 
-### gcs-project - buckets
+### gcs-project - [ permissions provided on bucket level ]
 
-- storage editor - check this...
 - storage legacy bucket reader
 - storage object admin 
 
