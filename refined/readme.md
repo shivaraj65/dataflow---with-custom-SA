@@ -58,9 +58,9 @@ This flow is expected to run through GitLab CI/CD.
 
 ---
 
-## reference link for dockerfile
+## reference link for dockerfile  - [--jira dockerfile link here --]
 
-## reference link for CI/CD.
+## reference link for CI/CD. - [--jira ci.yml link here --]
 
 ---
 
