@@ -32,7 +32,7 @@ Push Image to Artifact Registry
     ->
 Create Flex Template JSON
     ->
-Upload Template JSON to GCS
+build and Upload Template JSON to GCS
     ->
 Run Dataflow Job
     ->
