@@ -132,159 +132,20 @@ The following permissiosn are required for the SA:
 
 ### sample-project permissions
 
-- 
-- 
-- 
-- 
+- Artifact Registry Reader
+- Compute Viewer
+- Dataflow Worker
+- Storage Object Admin
 
-### shared-resources
+### shared-resources - [ artifacts registry project ]
 
--
--
--
--
+- Artifact Registry Reader - check this...
 
-### gcs-project
+### gcs-project - buckets
 
--
--
--
--
-
-
-
-This is the recommended production approach.
-
----
-
-
-
-# Runtime Permissions – sample-project
-
-The worker service account requires the following permissions in the Dataflow runtime project.
-
----
-
-## Dataflow Worker Role
-
-Required for Dataflow worker execution.
-
-```bash
-gcloud projects add-iam-policy-binding sample-project \
-  --member="serviceAccount:dataflow-worker-sa@sample-project.iam.gserviceaccount.com" \
-  --role="roles/dataflow.worker"
-```
-
----
-
-## Storage Access for Temp/Staging Buckets
-
-Required for:
-
-- temp files
-- staging files
-- shuffle data
-- intermediate processing
-
-```bash
-gcloud projects add-iam-policy-binding sample-project \
-  --member="serviceAccount:dataflow-worker-sa@sample-project.iam.gserviceaccount.com" \
-  --role="roles/storage.objectAdmin"
-```
-
----
-
-## Compute Viewer Access
-
-Required internally by Dataflow for Compute Engine resource visibility.
-
-```bash
-gcloud projects add-iam-policy-binding sample-project \
-  --member="serviceAccount:dataflow-worker-sa@sample-project.iam.gserviceaccount.com" \
-  --role="roles/compute.viewer"
-```
-
----
-
-# Runtime Permissions – Artifact Registry Project
-
-The worker service account must pull the Flex Template container image from Artifact Registry.
-
-Project:
-
-```text
-shared-resources
-```
-
-Required permission:
-
-```bash
-gcloud projects add-iam-policy-binding shared-resources \
-  --member="serviceAccount:dataflow-worker-sa@sample-project.iam.gserviceaccount.com" \
-  --role="roles/artifactregistry.reader"
-```
-
----
-
-# Runtime Permissions – Destination Bucket Project
-
-The worker service account must be able to:
-
-- read bucket metadata
-- create output files
-- manage objects
-
-Project:
-
-```text
-gcs-project
-```
-
-Bucket:
-
-```text
-gs://gcs-project-output
-```
-
----
-
-# Required Bucket Permissions
-
-## Object-Level Permissions
-
-Required for writing files.
-
-```bash
-gsutil iam ch \
-serviceAccount:dataflow-worker-sa@sample-project.iam.gserviceaccount.com:objectAdmin \
-gs://gcs-project-output
-```
-
----
-
-## Bucket Metadata Read Permission
-
-Required because Apache Beam validates the bucket before writing.
-
-```bash
-gsutil iam ch \
-serviceAccount:dataflow-worker-sa@sample-project.iam.gserviceaccount.com:legacyBucketReader \
-gs://gcs-project-output
-```
-
----
-
-# Important Note on Bucket Permissions
-
-Even if object write permissions are granted, Dataflow may still fail unless the worker service account can read bucket metadata.
-
-Typical error:
-
-```text
-storage.buckets.get permission denied
-```
-
-This occurs because Beam internally validates bucket existence before writing output.
+- storage editor - check this...
+- storage legacy bucket reader
+- storage object admin 
 
 ---
 
@@ -301,11 +162,6 @@ gcloud dataflow flex-template run "dummy-flex-job-001" \
   --temp-location gs://sample-project-dataflow-temp/temp \
   --project=sample-project
 ```
-
-
-
-
-
 
 ---
 
