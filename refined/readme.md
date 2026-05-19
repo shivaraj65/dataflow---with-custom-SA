@@ -132,7 +132,6 @@ The following permissiosn are required for the SA:
 
 ### sample-project permissions
 
-- Artifact Registry Reader
 - Compute Viewer
 - Dataflow Worker
 - Storage Object Admin
